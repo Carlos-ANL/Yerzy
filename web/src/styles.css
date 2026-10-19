@@ -215,28 +215,37 @@ hr { margin: 14px 0; border: 0; border-top: 1px solid var(--linea); }
 .tarjeta:has(.grande) .suave   { color: #b9e3d0; }
 .tarjeta:has(.grande) hr       { border-color: rgba(255, 255, 255, .22); }
 
+/* Las cuentas se muestran como tarjetas en rejilla, igual que las de crédito */
 .lista {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
   margin: 0 0 8px;
   padding: 0;
   list-style: none;
-  overflow: hidden;
+}
+.lista li {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+  min-height: 112px;
+  padding: 20px;
   background: var(--vidrio);
   -webkit-backdrop-filter: var(--blur);
           backdrop-filter: var(--blur);
   border: 1px solid var(--vidrio-borde);
   border-radius: var(--radio-m);
   box-shadow: var(--sombra-vidrio);
+  transition: transform .2s, box-shadow .2s;
 }
-.lista li {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 13px 18px;
-  border-bottom: 1px solid var(--linea);
-  transition: background .15s;
+.lista li:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 36px -14px rgba(11, 59, 44, .4), var(--brillo);
 }
-.lista li:hover      { background: rgba(255, 255, 255, .55); }
-.lista li:last-child { border-bottom: 0; }
+/* Nombre de la cuenta arriba, monto grande abajo */
+.lista li > :first-child { font-size: .95rem; font-weight: 600; color: var(--texto); }
+.lista li > :last-child  { font-size: 1.6rem; font-weight: 800; letter-spacing: -.02em; color: var(--verde-700); }
 
 
 /* ==========================================================================
@@ -374,7 +383,7 @@ tbody tr:last-child td  { border-bottom: 0; }
 
 /* Navegadores sin backdrop-filter: vidrio más opaco para mantener legibilidad */
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .barra, .tarjeta, .lista, .tabla-scroll, .centro .tarjeta { background: rgba(255, 255, 255, .94); }
+  .barra, .tarjeta, .lista li, .tabla-scroll, .centro .tarjeta { background: rgba(255, 255, 255, .94); }
 }
 
 @media (max-width: 560px) {
@@ -384,5 +393,5 @@ tbody tr:last-child td  { border-bottom: 0; }
 
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }
-  .tarjeta:hover { transform: none; }
+  .tarjeta:hover, .lista li:hover { transform: none; }
 }
