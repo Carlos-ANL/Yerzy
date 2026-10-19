@@ -1,12 +1,12 @@
 /* ==========================================================================
-   Mis inversiones · estilos
+   Mis inversiones · estilos (estilo glass / vidrio esmerilado)
    --------------------------------------------------------------------------
    1. Variables        5. Tarjetas y listas
-   2. Base             6. Formularios y botones
+   2. Base y fondo     6. Formularios y botones
    3. Layout           7. Tablas
    4. Barra superior   8. Mensajes
                        9. Inicio de sesión
-                      10. Responsive y accesibilidad
+                      10. Compatibilidad, responsive y accesibilidad
    ========================================================================== */
 
 @import url("https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap");
@@ -25,33 +25,34 @@
 
   /* Texto y líneas */
   --texto:        #12261d;
-  --suave:        #5b7266;
-  --linea:        #d3e5db;
-  --borde-fuerte: #bfd8cb;
+  --suave:        #4f6a5d;
+  --linea:        rgba(15, 106, 73, .14);
+  --borde-fuerte: rgba(15, 106, 73, .28);
 
   /* Estados */
   --error: #b3261e;
   --aviso: #8a5a00;
 
-  /* Superficies */
-  --tarjeta: #ffffff;
+  /* Vidrio */
+  --vidrio:        rgba(255, 255, 255, .55);
+  --vidrio-fuerte: rgba(255, 255, 255, .78);
+  --vidrio-borde:  rgba(255, 255, 255, .75);
+  --blur:          blur(18px) saturate(160%);
+  --brillo:        inset 0 1px 0 rgba(255, 255, 255, .85);
+  --sombra-vidrio: 0 10px 32px -14px rgba(11, 59, 44, .35), var(--brillo);
 
   /* Forma */
-  --radio-s: 10px;
-  --radio-m: 16px;
+  --radio-s: 12px;
+  --radio-m: 20px;
   --radio-pill: 999px;
 
-  /* Sombras */
-  --sombra-tarjeta:
-    0 1px 2px rgba(11, 59, 44, .06),
-    0 8px 20px -14px rgba(11, 59, 44, .25);
-
   /* Anillos de foco */
-  --foco-campo: 0 0 0 3px rgba(20, 128, 90, .22);
-  --foco-boton: 3px solid rgba(20, 128, 90, .45);
+  --foco-campo: 0 0 0 3px rgba(20, 128, 90, .25);
+  --foco-boton: 3px solid rgba(20, 128, 90, .5);
 
   /* Nombres anteriores, por compatibilidad */
   --fondo:         var(--verde-50);
+  --tarjeta:       var(--vidrio);
   --acento:        var(--verde-600);
   --acento-fuerte: var(--verde-700);
 
@@ -60,7 +61,7 @@
 
 
 /* ==========================================================================
-   2. BASE
+   2. BASE Y FONDO
    ========================================================================== */
 * { box-sizing: border-box; }
 
@@ -74,16 +75,30 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3 { margin: 0 0 .6rem; line-height: 1.2; }
-h2 { margin-top: 1.8rem; font-size: 1.3rem; font-weight: 700; color: var(--verde-900); }
-h3 { margin-top: 1rem;   font-size: 1rem;   font-weight: 600; color: var(--suave); }
+/* Luces difuminadas detrás del vidrio (es lo que hace visible el efecto) */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(45vmax 45vmax at 6% 8%,    rgba(16, 185, 129, .42), transparent 62%),
+    radial-gradient(40vmax 40vmax at 96% 18%,  rgba(13, 148, 136, .34), transparent 62%),
+    radial-gradient(50vmax 50vmax at 72% 105%, rgba(132, 204, 22, .26), transparent 62%),
+    radial-gradient(35vmax 35vmax at 20% 95%,  rgba(14, 116, 144, .22), transparent 62%),
+    linear-gradient(160deg, #eaf7f0, #dcefe5 55%, #e8f6ee);
+}
 
-hr { margin: 12px 0; border: 0; border-top: 1px solid var(--linea); }
+h1, h2, h3 { margin: 0 0 .6rem; line-height: 1.2; }
+h2 { margin-top: 2rem; font-size: 1.3rem; font-weight: 700; letter-spacing: -.01em; color: var(--verde-900); }
+h3 { margin-top: 1rem; font-size: 1rem;   font-weight: 600; color: var(--suave); }
+
+hr { margin: 14px 0; border: 0; border-top: 1px solid var(--linea); }
 
 /* Utilidades de texto */
 .etiqueta { margin: .4rem 0 0; font-size: .85rem; font-weight: 600; color: var(--suave); }
 .suave    { margin: .2rem 0 0; font-size: .9rem;  color: var(--suave); }
-.grande   { margin: 0; font-size: 2rem; font-weight: 800; letter-spacing: -.02em; color: var(--verde-700); }
+.grande   { margin: 0; font-size: 2.1rem; font-weight: 800; letter-spacing: -.02em; color: var(--verde-700); }
 .medio    { margin: 0; font-size: 1.2rem; font-weight: 700; }
 .num      { text-align: right; }
 
@@ -94,28 +109,35 @@ hr { margin: 12px 0; border: 0; border-top: 1px solid var(--linea); }
 .app {
   max-width: 1000px;
   margin: 0 auto;
-  padding: 0 16px 56px;
+  padding: 0 16px 64px;
 }
 
 .rejilla {
   display: grid;
-  gap: 14px;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
 }
 
 
 /* ==========================================================================
-   4. BARRA SUPERIOR (banda verde a todo el ancho)
+   4. BARRA SUPERIOR (vidrio fijo a todo el ancho)
    ========================================================================== */
 .barra {
+  position: sticky;
+  top: 0;
+  z-index: 10;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 12px 16px;
   margin: 0 calc(50% - 50vw) 24px;
-  padding: 14px calc(50vw - 50%);
-  background: var(--verde-900);
-  color: #fff;
+  padding: 12px calc(50vw - 50%);
+  background: rgba(255, 255, 255, .5);
+  -webkit-backdrop-filter: var(--blur);
+          backdrop-filter: var(--blur);
+  border-bottom: 1px solid var(--vidrio-borde);
+  box-shadow: 0 8px 28px -18px rgba(11, 59, 44, .45);
+  color: var(--verde-900);
 }
 
 .barra h1 {
@@ -126,64 +148,94 @@ hr { margin: 12px 0; border: 0; border-top: 1px solid var(--linea); }
   letter-spacing: -.01em;
 }
 
-.barra nav { display: flex; flex-wrap: wrap; gap: 4px; }
+/* Pestañas dentro de una cápsula de vidrio */
+.barra nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  padding: 4px;
+  background: rgba(255, 255, 255, .45);
+  border: 1px solid var(--vidrio-borde);
+  border-radius: var(--radio-pill);
+  box-shadow: var(--brillo);
+}
 
 .barra button {
-  padding: 7px 14px;
+  padding: 7px 16px;
   border: 1px solid transparent;
   border-radius: var(--radio-pill);
   background: transparent;
-  color: #cfe8dc;
+  box-shadow: none;
+  color: var(--verde-900);
   font-weight: 600;
 }
-.barra button:hover        { background: rgba(255, 255, 255, .12); color: #fff; }
-.barra button:focus-visible { outline-color: #fff; }
+.barra button:hover { background: rgba(255, 255, 255, .7); border-color: transparent; }
 
-.barra .tab.activa { background: #fff; border-color: #fff; color: var(--verde-900); }
-.barra .salir      { border-color: rgba(255, 255, 255, .35); color: #fff; }
+.barra .tab.activa {
+  background: linear-gradient(135deg, var(--verde-600), var(--verde-900));
+  border-color: rgba(255, 255, 255, .25);
+  box-shadow: 0 6px 14px -8px rgba(11, 59, 44, .8), inset 0 1px 0 rgba(255, 255, 255, .3);
+  color: #fff;
+}
+
+.barra .salir {
+  background: rgba(255, 255, 255, .5);
+  border-color: var(--vidrio-borde);
+  box-shadow: var(--brillo);
+}
 
 
 /* ==========================================================================
    5. TARJETAS Y LISTAS
    ========================================================================== */
 .tarjeta {
-  padding: 18px;
-  background: var(--tarjeta);
-  border: 1px solid var(--linea);
+  padding: 20px;
+  background: var(--vidrio);
+  -webkit-backdrop-filter: var(--blur);
+          backdrop-filter: var(--blur);
+  border: 1px solid var(--vidrio-borde);
   border-radius: var(--radio-m);
-  box-shadow: var(--sombra-tarjeta);
+  box-shadow: var(--sombra-vidrio);
+  transition: transform .2s, box-shadow .2s;
 }
-.tarjeta h3 { margin: 0 0 .5rem; font-size: 1.05rem; color: var(--texto); }
+.tarjeta:hover { transform: translateY(-2px); box-shadow: 0 16px 36px -14px rgba(11, 59, 44, .4), var(--brillo); }
+.tarjeta h3    { margin: 0 0 .5rem; font-size: 1.05rem; color: var(--texto); }
 
 /* Tarjeta destacada: la que lleva la cifra principal (.grande) */
 .tarjeta:has(.grande) {
-  background: var(--verde-900);
-  border-color: var(--verde-900);
+  background: linear-gradient(150deg, rgba(20, 128, 90, .9), rgba(11, 59, 44, .94));
+  border-color: rgba(255, 255, 255, .28);
+  box-shadow: 0 18px 40px -16px rgba(11, 59, 44, .7), inset 0 1px 0 rgba(255, 255, 255, .3);
   color: #fff;
 }
 .tarjeta:has(.grande) h3,
 .tarjeta:has(.grande) .grande,
-.tarjeta:has(.grande) .medio    { color: #fff; }
+.tarjeta:has(.grande) .medio   { color: #fff; }
 .tarjeta:has(.grande) .etiqueta,
-.tarjeta:has(.grande) .suave    { color: #a9d4c1; }
-.tarjeta:has(.grande) hr        { border-color: rgba(255, 255, 255, .2); }
+.tarjeta:has(.grande) .suave   { color: #b9e3d0; }
+.tarjeta:has(.grande) hr       { border-color: rgba(255, 255, 255, .22); }
 
 .lista {
   margin: 0 0 8px;
   padding: 0;
   list-style: none;
   overflow: hidden;
-  background: var(--tarjeta);
-  border: 1px solid var(--linea);
+  background: var(--vidrio);
+  -webkit-backdrop-filter: var(--blur);
+          backdrop-filter: var(--blur);
+  border: 1px solid var(--vidrio-borde);
   border-radius: var(--radio-m);
+  box-shadow: var(--sombra-vidrio);
 }
 .lista li {
   display: flex;
   justify-content: space-between;
   gap: 12px;
-  padding: 12px 16px;
+  padding: 13px 18px;
   border-bottom: 1px solid var(--linea);
+  transition: background .15s;
 }
+.lista li:hover      { background: rgba(255, 255, 255, .55); }
 .lista li:last-child { border-bottom: 0; }
 
 
@@ -205,47 +257,55 @@ input, select, button { font: inherit; }
 
 input, select {
   width: 100%;
-  padding: 10px 12px;
-  background: var(--tarjeta);
+  padding: 11px 14px;
+  background: rgba(255, 255, 255, .6);
   color: var(--texto);
   border: 1px solid var(--borde-fuerte);
   border-radius: var(--radio-s);
-  transition: border-color .15s, box-shadow .15s;
+  box-shadow: inset 0 1px 2px rgba(11, 59, 44, .06);
+  transition: border-color .15s, box-shadow .15s, background .15s;
 }
 input:focus-visible,
 select:focus-visible {
   outline: none;
+  background: rgba(255, 255, 255, .9);
   border-color: var(--verde-600);
   box-shadow: var(--foco-campo);
 }
 
 /* Botón base (secundario) */
 button {
-  padding: 9px 16px;
-  background: var(--tarjeta);
+  padding: 9px 18px;
+  background: rgba(255, 255, 255, .6);
   color: var(--verde-700);
-  border: 1px solid var(--linea);
+  border: 1px solid var(--vidrio-borde);
   border-radius: var(--radio-s);
+  box-shadow: var(--brillo), 0 4px 12px -8px rgba(11, 59, 44, .35);
   font-weight: 600;
   cursor: pointer;
-  transition: background .15s, border-color .15s;
+  transition: background .15s, border-color .15s, transform .1s;
 }
-button:hover          { background: var(--verde-50); border-color: var(--borde-fuerte); }
+button:hover          { background: rgba(255, 255, 255, .88); }
+button:active         { transform: translateY(1px); }
 button:focus-visible  { outline: var(--foco-boton); outline-offset: 2px; }
 button:disabled       { opacity: .55; cursor: default; }
 
 /* Botón principal */
 button.primario {
-  background: var(--verde-600);
-  border-color: var(--verde-600);
+  background: linear-gradient(135deg, #1a9a6c, var(--verde-700));
+  border-color: rgba(255, 255, 255, .35);
+  box-shadow: 0 8px 18px -10px rgba(15, 106, 73, .9), inset 0 1px 0 rgba(255, 255, 255, .35);
   color: #fff;
-  box-shadow: 0 6px 14px -8px rgba(15, 106, 73, .8);
 }
-button.primario:hover { background: var(--verde-700); border-color: var(--verde-700); }
+button.primario:hover { background: linear-gradient(135deg, #1fae7c, var(--verde-600)); }
 
 /* Pestañas / segmentos */
-.tab.activa  { background: var(--verde-600); border-color: var(--verde-600); color: #fff; }
-.segmentos   { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.tab.activa {
+  background: linear-gradient(135deg, var(--verde-600), var(--verde-700));
+  border-color: rgba(255, 255, 255, .3);
+  color: #fff;
+}
+.segmentos { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
 
 
 /* ==========================================================================
@@ -253,24 +313,31 @@ button.primario:hover { background: var(--verde-700); border-color: var(--verde-
    ========================================================================== */
 .tabla-scroll {
   overflow-x: auto;
-  background: var(--tarjeta);
-  border: 1px solid var(--linea);
+  background: var(--vidrio);
+  -webkit-backdrop-filter: var(--blur);
+          backdrop-filter: var(--blur);
+  border: 1px solid var(--vidrio-borde);
   border-radius: var(--radio-m);
+  box-shadow: var(--sombra-vidrio);
 }
 
 table { width: 100%; border-collapse: collapse; font-size: .9rem; }
 
 th, td {
-  padding: 10px 14px;
+  padding: 11px 16px;
   text-align: left;
   white-space: nowrap;
   border-bottom: 1px solid var(--linea);
 }
 td:last-child { white-space: normal; }
 
-th { background: var(--verde-100); color: var(--verde-900); font-weight: 700; }
+th {
+  background: rgba(225, 242, 233, .65);
+  color: var(--verde-900);
+  font-weight: 700;
+}
 
-tbody tr:hover td       { background: var(--verde-50); }
+tbody tr:hover td       { background: rgba(255, 255, 255, .6); }
 tbody tr:last-child td  { border-bottom: 0; }
 
 
@@ -290,24 +357,32 @@ tbody tr:last-child td  { border-bottom: 0; }
   display: grid;
   place-items: center;
   padding: 16px;
-  background: linear-gradient(160deg, var(--verde-900), var(--verde-700));
-  color: #fff;
+  color: var(--verde-900);
 }
 .centro .tarjeta {
+  background: rgba(255, 255, 255, .62);
   color: var(--texto);
-  box-shadow: 0 24px 50px -22px rgba(0, 0, 0, .55);
+  box-shadow: 0 28px 60px -24px rgba(11, 59, 44, .55), var(--brillo);
 }
+.centro .tarjeta:hover { transform: none; }
 .login { display: grid; gap: 14px; width: min(380px, 100%); }
 
 
 /* ==========================================================================
-   10. RESPONSIVE Y ACCESIBILIDAD
+   10. COMPATIBILIDAD, RESPONSIVE Y ACCESIBILIDAD
    ========================================================================== */
+
+/* Navegadores sin backdrop-filter: vidrio más opaco para mantener legibilidad */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .barra, .tarjeta, .lista, .tabla-scroll, .centro .tarjeta { background: rgba(255, 255, 255, .94); }
+}
+
 @media (max-width: 560px) {
   .barra nav { order: 3; width: 100%; flex-wrap: nowrap; overflow-x: auto; }
-  .grande    { font-size: 1.7rem; }
+  .grande    { font-size: 1.8rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }
+  .tarjeta:hover { transform: none; }
 }
