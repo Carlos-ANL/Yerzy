@@ -41,6 +41,10 @@
   --brillo:        inset 0 1px 0 rgba(255, 255, 255, .85);
   --sombra-vidrio: 0 10px 32px -14px rgba(11, 59, 44, .35), var(--brillo);
 
+  /* Tarjeta verde (crédito y cuentas) */
+  --verde-vidrio: linear-gradient(150deg, rgba(20, 128, 90, .9), rgba(11, 59, 44, .94));
+  --sombra-verde: 0 18px 40px -16px rgba(11, 59, 44, .7), inset 0 1px 0 rgba(255, 255, 255, .3);
+
   /* Forma */
   --radio-s: 12px;
   --radio-m: 20px;
@@ -203,9 +207,9 @@ hr { margin: 14px 0; border: 0; border-top: 1px solid var(--linea); }
 
 /* Tarjeta destacada: la que lleva la cifra principal (.grande) */
 .tarjeta:has(.grande) {
-  background: linear-gradient(150deg, rgba(20, 128, 90, .9), rgba(11, 59, 44, .94));
+  background: var(--verde-vidrio);
   border-color: rgba(255, 255, 255, .28);
-  box-shadow: 0 18px 40px -16px rgba(11, 59, 44, .7), inset 0 1px 0 rgba(255, 255, 255, .3);
+  box-shadow: var(--sombra-verde);
   color: #fff;
 }
 .tarjeta:has(.grande) h3,
@@ -231,21 +235,23 @@ hr { margin: 14px 0; border: 0; border-top: 1px solid var(--linea); }
   gap: 14px;
   min-height: 112px;
   padding: 20px;
-  background: var(--vidrio);
+  background: var(--verde-vidrio);
   -webkit-backdrop-filter: var(--blur);
           backdrop-filter: var(--blur);
-  border: 1px solid var(--vidrio-borde);
+  border: 1px solid rgba(255, 255, 255, .28);
   border-radius: var(--radio-m);
-  box-shadow: var(--sombra-vidrio);
+  box-shadow: var(--sombra-verde);
+  color: #fff;
   transition: transform .2s, box-shadow .2s;
 }
 .lista li:hover {
   transform: translateY(-2px);
-  box-shadow: 0 16px 36px -14px rgba(11, 59, 44, .4), var(--brillo);
+  box-shadow: 0 22px 44px -16px rgba(11, 59, 44, .8), inset 0 1px 0 rgba(255, 255, 255, .3);
 }
 /* Nombre de la cuenta arriba, monto grande abajo */
-.lista li > :first-child { font-size: .95rem; font-weight: 600; color: var(--texto); }
-.lista li > :last-child  { font-size: 1.6rem; font-weight: 800; letter-spacing: -.02em; color: var(--verde-700); }
+.lista li > :first-child { font-size: .95rem; font-weight: 600; color: #fff; }
+.lista li > :last-child  { font-size: 1.6rem; font-weight: 800; letter-spacing: -.02em; color: #fff; }
+.lista li .suave         { color: #b9e3d0; }
 
 
 /* ==========================================================================
@@ -383,7 +389,7 @@ tbody tr:last-child td  { border-bottom: 0; }
 
 /* Navegadores sin backdrop-filter: vidrio más opaco para mantener legibilidad */
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .barra, .tarjeta, .lista li, .tabla-scroll, .centro .tarjeta { background: rgba(255, 255, 255, .94); }
+  .barra, .tarjeta, .tabla-scroll, .centro .tarjeta { background: rgba(255, 255, 255, .94); }
 }
 
 @media (max-width: 560px) {
