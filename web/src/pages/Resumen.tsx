@@ -62,23 +62,30 @@ export default function Resumen({ version }: { version: number }) {
 
       <section>
         <h2>Saldos</h2>
-        <p className="suave">
-          Total: {dinero(totalPEN, "PEN")} · {dinero(totalUSD, "USD")}
-        </p>
+        <div className="total">
+          <div>
+            <span className="etiqueta">Total en soles</span>
+            <strong>{dinero(totalPEN, "PEN")}</strong>
+          </div>
+          <div>
+            <span className="etiqueta">Total en dólares</span>
+            <strong>{dinero(totalUSD, "USD")}</strong>
+          </div>
+        </div>
         {orden.map((tipo) => {
           const lista = otros.filter((s) => s.tipo === tipo);
           if (lista.length === 0) return null;
           const titulo = tipo === "alto_rendimiento" ? "Tarjeta de alto rendimiento" : ETIQUETA_TIPO_CUENTA[tipo];
           return (
-            <div key={tipo}>
+            <div key={tipo} className="grupo">
               <h3>{titulo}</h3>
               <ul className="lista">
                 {lista.map((s) => (
                   <li key={s.cuenta_id}>
-                    <span>
-                      {s.nombre}
-                      {s.banco ? <span className="suave"> · {s.banco}</span> : null}
-                    </span>
+                    <div className="cuenta-info">
+                      <span className="cuenta-nombre">{s.nombre}</span>
+                      {s.banco && s.banco !== s.nombre ? <span className="suave">{s.banco}</span> : null}
+                    </div>
                     <strong>{dinero(Number(s.saldo), s.moneda)}</strong>
                   </li>
                 ))}
