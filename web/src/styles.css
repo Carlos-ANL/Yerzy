@@ -143,22 +143,8 @@ hr { margin: 14px 0; border: 0; border-top: 1px solid var(--linea); }
   color: var(--suave);
 }
 
-/* Resumen de totales (vidrio claro, alineado con la parte superior de la tarjeta de crédito) */
-.total {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
-  padding: 16px 20px;
-  background: var(--vidrio);
-  -webkit-backdrop-filter: var(--blur);
-          backdrop-filter: var(--blur);
-  border: 1px solid var(--vidrio-borde);
-  border-radius: var(--radio-m);
-  box-shadow: var(--sombra-vidrio);
-}
-.total > div    { display: grid; gap: 2px; }
-.total .etiqueta { margin: 0; }
-.total strong   { font-size: 1.35rem; font-weight: 800; letter-spacing: -.02em; color: var(--verde-900); }
+/* Títulos de sección pegados arriba (sin el hueco extra bajo la barra) */
+.resumen h2 { margin-top: 0; }
 
 
 /* ==========================================================================
