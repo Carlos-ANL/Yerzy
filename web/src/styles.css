@@ -1,24 +1,69 @@
+/* ==========================================================================
+   Mis inversiones · estilos
+   --------------------------------------------------------------------------
+   1. Variables        5. Tarjetas y listas
+   2. Base             6. Formularios y botones
+   3. Layout           7. Tablas
+   4. Barra superior   8. Mensajes
+                       9. Inicio de sesión
+                      10. Responsive y accesibilidad
+   ========================================================================== */
+
 @import url("https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap");
 
+
+/* ==========================================================================
+   1. VARIABLES
+   ========================================================================== */
 :root {
+  /* Verdes */
   --verde-900: #0b3b2c;
   --verde-700: #0f6a49;
   --verde-600: #14805a;
   --verde-100: #e1f2e9;
-  --verde-50: #f2f8f5;
-  --texto: #12261d;
-  --suave: #5b7266;
-  --linea: #d3e5db;
+  --verde-50:  #f2f8f5;
+
+  /* Texto y líneas */
+  --texto:        #12261d;
+  --suave:        #5b7266;
+  --linea:        #d3e5db;
+  --borde-fuerte: #bfd8cb;
+
+  /* Estados */
   --error: #b3261e;
   --aviso: #8a5a00;
-  /* nombres anteriores, por compatibilidad */
-  --fondo: var(--verde-50);
+
+  /* Superficies */
   --tarjeta: #ffffff;
-  --acento: var(--verde-600);
+
+  /* Forma */
+  --radio-s: 10px;
+  --radio-m: 16px;
+  --radio-pill: 999px;
+
+  /* Sombras */
+  --sombra-tarjeta:
+    0 1px 2px rgba(11, 59, 44, .06),
+    0 8px 20px -14px rgba(11, 59, 44, .25);
+
+  /* Anillos de foco */
+  --foco-campo: 0 0 0 3px rgba(20, 128, 90, .22);
+  --foco-boton: 3px solid rgba(20, 128, 90, .45);
+
+  /* Nombres anteriores, por compatibilidad */
+  --fondo:         var(--verde-50);
+  --acento:        var(--verde-600);
   --acento-fuerte: var(--verde-700);
+
   color-scheme: light;
 }
+
+
+/* ==========================================================================
+   2. BASE
+   ========================================================================== */
 * { box-sizing: border-box; }
+
 body {
   margin: 0;
   overflow-x: hidden;
@@ -28,97 +73,241 @@ body {
   font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased;
 }
-h1, h2, h3 { line-height: 1.2; margin: 0 0 .6rem; }
-h2 { font-size: 1.3rem; font-weight: 700; color: var(--verde-900); margin-top: 1.8rem; }
-h3 { font-size: 1rem; margin-top: 1rem; color: var(--suave); font-weight: 600; }
 
-/* ---------- Barra superior: banda verde a todo el ancho ---------- */
-.app { max-width: 1000px; margin: 0 auto; padding: 0 16px 56px; }
+h1, h2, h3 { margin: 0 0 .6rem; line-height: 1.2; }
+h2 { margin-top: 1.8rem; font-size: 1.3rem; font-weight: 700; color: var(--verde-900); }
+h3 { margin-top: 1rem;   font-size: 1rem;   font-weight: 600; color: var(--suave); }
+
+hr { margin: 12px 0; border: 0; border-top: 1px solid var(--linea); }
+
+/* Utilidades de texto */
+.etiqueta { margin: .4rem 0 0; font-size: .85rem; font-weight: 600; color: var(--suave); }
+.suave    { margin: .2rem 0 0; font-size: .9rem;  color: var(--suave); }
+.grande   { margin: 0; font-size: 2rem; font-weight: 800; letter-spacing: -.02em; color: var(--verde-700); }
+.medio    { margin: 0; font-size: 1.2rem; font-weight: 700; }
+.num      { text-align: right; }
+
+
+/* ==========================================================================
+   3. LAYOUT
+   ========================================================================== */
+.app {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 16px 56px;
+}
+
+.rejilla {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+}
+
+
+/* ==========================================================================
+   4. BARRA SUPERIOR (banda verde a todo el ancho)
+   ========================================================================== */
 .barra {
-  display: flex; flex-wrap: wrap; gap: 12px 16px; align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 16px;
   margin: 0 calc(50% - 50vw) 24px;
   padding: 14px calc(50vw - 50%);
-  background: var(--verde-900); color: #fff;
+  background: var(--verde-900);
+  color: #fff;
 }
-.barra h1 { font-size: 1.25rem; font-weight: 800; letter-spacing: -.01em; margin: 0; flex: 1 1 auto; }
-.barra nav { display: flex; gap: 4px; flex-wrap: wrap; }
+
+.barra h1 {
+  flex: 1 1 auto;
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -.01em;
+}
+
+.barra nav { display: flex; flex-wrap: wrap; gap: 4px; }
+
 .barra button {
-  background: transparent; border: 1px solid transparent; color: #cfe8dc;
-  padding: 7px 14px; border-radius: 999px; font-weight: 600;
+  padding: 7px 14px;
+  border: 1px solid transparent;
+  border-radius: var(--radio-pill);
+  background: transparent;
+  color: #cfe8dc;
+  font-weight: 600;
 }
-.barra button:hover { background: rgba(255, 255, 255, .12); color: #fff; }
+.barra button:hover        { background: rgba(255, 255, 255, .12); color: #fff; }
+.barra button:focus-visible { outline-color: #fff; }
+
 .barra .tab.activa { background: #fff; border-color: #fff; color: var(--verde-900); }
-.barra .salir { border-color: rgba(255, 255, 255, .35); color: #fff; }
+.barra .salir      { border-color: rgba(255, 255, 255, .35); color: #fff; }
 
-/* ---------- Tarjetas ---------- */
+
+/* ==========================================================================
+   5. TARJETAS Y LISTAS
+   ========================================================================== */
 .tarjeta {
-  background: #fff; border: 1px solid var(--linea); border-radius: 16px; padding: 18px;
-  box-shadow: 0 1px 2px rgba(11, 59, 44, .06), 0 8px 20px -14px rgba(11, 59, 44, .25);
+  padding: 18px;
+  background: var(--tarjeta);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio-m);
+  box-shadow: var(--sombra-tarjeta);
 }
-.tarjeta h3 { margin: 0 0 .5rem; color: var(--texto); font-size: 1.05rem; }
-.rejilla { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
-.etiqueta { margin: .4rem 0 0; font-size: .85rem; font-weight: 600; color: var(--suave); }
-.grande { margin: 0; font-size: 2rem; font-weight: 800; letter-spacing: -.02em; color: var(--verde-700); }
-.medio { margin: 0; font-size: 1.2rem; font-weight: 700; }
-.suave { color: var(--suave); font-size: .9rem; margin: .2rem 0 0; }
-/* La tarjeta con la cifra principal se destaca: verde profundo con texto blanco */
-.tarjeta:has(.grande) { background: var(--verde-900); border-color: var(--verde-900); color: #fff; }
-.tarjeta:has(.grande) h3, .tarjeta:has(.grande) .grande, .tarjeta:has(.grande) .medio { color: #fff; }
-.tarjeta:has(.grande) .etiqueta, .tarjeta:has(.grande) .suave { color: #a9d4c1; }
-.tarjeta:has(.grande) hr { border-color: rgba(255, 255, 255, .2); }
-hr { border: 0; border-top: 1px solid var(--linea); margin: 12px 0; }
+.tarjeta h3 { margin: 0 0 .5rem; font-size: 1.05rem; color: var(--texto); }
 
-.lista { list-style: none; margin: 0 0 8px; padding: 0; background: #fff; border: 1px solid var(--linea); border-radius: 16px; overflow: hidden; }
-.lista li { display: flex; justify-content: space-between; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--linea); }
+/* Tarjeta destacada: la que lleva la cifra principal (.grande) */
+.tarjeta:has(.grande) {
+  background: var(--verde-900);
+  border-color: var(--verde-900);
+  color: #fff;
+}
+.tarjeta:has(.grande) h3,
+.tarjeta:has(.grande) .grande,
+.tarjeta:has(.grande) .medio    { color: #fff; }
+.tarjeta:has(.grande) .etiqueta,
+.tarjeta:has(.grande) .suave    { color: #a9d4c1; }
+.tarjeta:has(.grande) hr        { border-color: rgba(255, 255, 255, .2); }
+
+.lista {
+  margin: 0 0 8px;
+  padding: 0;
+  list-style: none;
+  overflow: hidden;
+  background: var(--tarjeta);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio-m);
+}
+.lista li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--linea);
+}
 .lista li:last-child { border-bottom: 0; }
 
-/* ---------- Formularios y botones ---------- */
-label { display: grid; gap: 5px; font-size: .9rem; font-weight: 500; color: var(--suave); }
-input, select, button { font: inherit; }
-input, select {
-  width: 100%; padding: 10px 12px; border: 1px solid #bfd8cb; border-radius: 10px;
-  background: #fff; color: var(--texto); transition: border-color .15s, box-shadow .15s;
-}
-input:focus-visible, select:focus-visible { outline: none; border-color: var(--verde-600); box-shadow: 0 0 0 3px rgba(20, 128, 90, .22); }
-.formulario { display: grid; gap: 14px; }
-.fila { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
-button {
-  cursor: pointer; border-radius: 10px; border: 1px solid var(--linea); background: #fff;
-  color: var(--verde-700); font-weight: 600; padding: 9px 16px; transition: background .15s, border-color .15s;
-}
-button:hover { background: var(--verde-50); border-color: #b5d3c4; }
-button:focus-visible { outline: 3px solid rgba(20, 128, 90, .45); outline-offset: 2px; }
-.barra button:focus-visible { outline-color: #fff; }
-button.primario { background: var(--verde-600); border-color: var(--verde-600); color: #fff; box-shadow: 0 6px 14px -8px rgba(15, 106, 73, .8); }
-button.primario:hover { background: var(--verde-700); border-color: var(--verde-700); }
-button:disabled { opacity: .55; cursor: default; }
-.tab.activa { background: var(--verde-600); border-color: var(--verde-600); color: #fff; }
-.segmentos { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
 
-/* ---------- Mensajes ---------- */
-.error { color: var(--error); font-weight: 500; margin: 0; }
-.ok { color: var(--verde-700); font-weight: 600; margin: 0; }
+/* ==========================================================================
+   6. FORMULARIOS Y BOTONES
+   ========================================================================== */
+.formulario { display: grid; gap: 14px; }
+.fila       { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+
+label {
+  display: grid;
+  gap: 5px;
+  font-size: .9rem;
+  font-weight: 500;
+  color: var(--suave);
+}
+
+input, select, button { font: inherit; }
+
+input, select {
+  width: 100%;
+  padding: 10px 12px;
+  background: var(--tarjeta);
+  color: var(--texto);
+  border: 1px solid var(--borde-fuerte);
+  border-radius: var(--radio-s);
+  transition: border-color .15s, box-shadow .15s;
+}
+input:focus-visible,
+select:focus-visible {
+  outline: none;
+  border-color: var(--verde-600);
+  box-shadow: var(--foco-campo);
+}
+
+/* Botón base (secundario) */
+button {
+  padding: 9px 16px;
+  background: var(--tarjeta);
+  color: var(--verde-700);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio-s);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+button:hover          { background: var(--verde-50); border-color: var(--borde-fuerte); }
+button:focus-visible  { outline: var(--foco-boton); outline-offset: 2px; }
+button:disabled       { opacity: .55; cursor: default; }
+
+/* Botón principal */
+button.primario {
+  background: var(--verde-600);
+  border-color: var(--verde-600);
+  color: #fff;
+  box-shadow: 0 6px 14px -8px rgba(15, 106, 73, .8);
+}
+button.primario:hover { background: var(--verde-700); border-color: var(--verde-700); }
+
+/* Pestañas / segmentos */
+.tab.activa  { background: var(--verde-600); border-color: var(--verde-600); color: #fff; }
+.segmentos   { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+
+
+/* ==========================================================================
+   7. TABLAS
+   ========================================================================== */
+.tabla-scroll {
+  overflow-x: auto;
+  background: var(--tarjeta);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio-m);
+}
+
+table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+
+th, td {
+  padding: 10px 14px;
+  text-align: left;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--linea);
+}
+td:last-child { white-space: normal; }
+
+th { background: var(--verde-100); color: var(--verde-900); font-weight: 700; }
+
+tbody tr:hover td       { background: var(--verde-50); }
+tbody tr:last-child td  { border-bottom: 0; }
+
+
+/* ==========================================================================
+   8. MENSAJES
+   ========================================================================== */
+.error { margin: 0; color: var(--error);     font-weight: 500; }
+.ok    { margin: 0; color: var(--verde-700); font-weight: 600; }
 .aviso { color: var(--aviso); font-size: .85rem; }
 
-/* ---------- Tablas ---------- */
-.tabla-scroll { overflow-x: auto; background: #fff; border: 1px solid var(--linea); border-radius: 16px; }
-table { width: 100%; border-collapse: collapse; font-size: .9rem; }
-th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--linea); white-space: nowrap; }
-td:last-child { white-space: normal; }
-th { background: var(--verde-100); color: var(--verde-900); font-weight: 700; }
-tbody tr:hover td { background: var(--verde-50); }
-tbody tr:last-child td { border-bottom: 0; }
-.num { text-align: right; }
 
-/* ---------- Inicio de sesión ---------- */
-.centro { min-height: 100vh; display: grid; place-items: center; padding: 16px; background: linear-gradient(160deg, var(--verde-900), var(--verde-700)); color: #fff; }
-.centro .tarjeta { color: var(--texto); box-shadow: 0 24px 50px -22px rgba(0, 0, 0, .55); }
-.login { width: min(380px, 100%); display: grid; gap: 14px; }
+/* ==========================================================================
+   9. INICIO DE SESIÓN
+   ========================================================================== */
+.centro {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: linear-gradient(160deg, var(--verde-900), var(--verde-700));
+  color: #fff;
+}
+.centro .tarjeta {
+  color: var(--texto);
+  box-shadow: 0 24px 50px -22px rgba(0, 0, 0, .55);
+}
+.login { display: grid; gap: 14px; width: min(380px, 100%); }
 
+
+/* ==========================================================================
+   10. RESPONSIVE Y ACCESIBILIDAD
+   ========================================================================== */
 @media (max-width: 560px) {
   .barra nav { order: 3; width: 100%; flex-wrap: nowrap; overflow-x: auto; }
-  .grande { font-size: 1.7rem; }
+  .grande    { font-size: 1.7rem; }
 }
+
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }
 }
