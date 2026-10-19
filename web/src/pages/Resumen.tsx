@@ -62,16 +62,20 @@ export default function Resumen({ version }: { version: number }) {
 
       <section>
         <h2>Saldos</h2>
-        <div className="total">
-          <div>
-            <span className="etiqueta">Total en soles</span>
+        <ul className="lista">
+          <li>
+            <div className="cuenta-info">
+              <span className="cuenta-nombre">Total en soles</span>
+            </div>
             <strong>{dinero(totalPEN, "PEN")}</strong>
-          </div>
-          <div>
-            <span className="etiqueta">Total en dólares</span>
+          </li>
+          <li>
+            <div className="cuenta-info">
+              <span className="cuenta-nombre">Total en dólares</span>
+            </div>
             <strong>{dinero(totalUSD, "USD")}</strong>
-          </div>
-        </div>
+          </li>
+        </ul>
         {orden.map((tipo) => {
           const lista = otros.filter((s) => s.tipo === tipo);
           if (lista.length === 0) return null;
