@@ -125,11 +125,40 @@ hr { margin: 14px 0; border: 0; border-top: 1px solid var(--linea); }
 /* Pantalla Resumen: crédito a la izquierda, cuentas a la derecha (arriba) */
 .resumen {
   display: grid;
-  gap: 0 28px;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 32px;
+  grid-template-columns: minmax(300px, 380px) minmax(0, 1fr);
   align-items: start;
 }
 .resumen > section { min-width: 0; }
+.resumen .rejilla  { grid-template-columns: 1fr; }   /* tarjetas de crédito en una columna */
+
+/* Grupos de cuentas: título tipo etiqueta + espacio uniforme */
+.grupo      { margin-top: 24px; }
+.grupo h3   {
+  margin: 0 0 10px;
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--suave);
+}
+
+/* Resumen de totales (vidrio claro, alineado con la parte superior de la tarjeta de crédito) */
+.total {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  padding: 16px 20px;
+  background: var(--vidrio);
+  -webkit-backdrop-filter: var(--blur);
+          backdrop-filter: var(--blur);
+  border: 1px solid var(--vidrio-borde);
+  border-radius: var(--radio-m);
+  box-shadow: var(--sombra-vidrio);
+}
+.total > div    { display: grid; gap: 2px; }
+.total .etiqueta { margin: 0; }
+.total strong   { font-size: 1.35rem; font-weight: 800; letter-spacing: -.02em; color: var(--verde-900); }
 
 
 /* ==========================================================================
@@ -242,7 +271,7 @@ hr { margin: 14px 0; border: 0; border-top: 1px solid var(--linea); }
   flex-direction: column;
   justify-content: space-between;
   gap: 14px;
-  min-height: 112px;
+  min-height: 124px;
   padding: 20px;
   background: var(--verde-vidrio);
   -webkit-backdrop-filter: var(--blur);
@@ -258,9 +287,10 @@ hr { margin: 14px 0; border: 0; border-top: 1px solid var(--linea); }
   box-shadow: 0 22px 44px -16px rgba(11, 59, 44, .8), inset 0 1px 0 rgba(255, 255, 255, .3);
 }
 /* Nombre de la cuenta arriba, monto grande abajo */
-.lista li > :first-child { font-size: .95rem; font-weight: 600; color: #fff; }
-.lista li > :last-child  { font-size: 1.45rem; font-weight: 800; letter-spacing: -.02em; color: #fff; }
-.lista li .suave         { color: #b9e3d0; }
+.lista .cuenta-info   { display: grid; gap: 2px; }
+.lista .cuenta-nombre { font-size: 1rem; font-weight: 700; color: #fff; }
+.lista li .suave      { margin: 0; font-size: .85rem; color: #b9e3d0; }
+.lista li > strong    { font-size: 1.45rem; font-weight: 800; letter-spacing: -.02em; color: #fff; }
 
 
 /* ==========================================================================
@@ -401,7 +431,7 @@ tbody tr:last-child td  { border-bottom: 0; }
   .barra, .tarjeta, .tabla-scroll, .centro .tarjeta { background: rgba(255, 255, 255, .94); }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 820px) {
   .resumen { grid-template-columns: 1fr; }
 }
 
