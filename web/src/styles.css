@@ -122,6 +122,15 @@ hr { margin: 14px 0; border: 0; border-top: 1px solid var(--linea); }
   grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
 }
 
+/* Pantalla Resumen: crédito a la izquierda, cuentas a la derecha (arriba) */
+.resumen {
+  display: grid;
+  gap: 0 28px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+}
+.resumen > section { min-width: 0; }
+
 
 /* ==========================================================================
    4. BARRA SUPERIOR (vidrio fijo a todo el ancho)
@@ -223,7 +232,7 @@ hr { margin: 14px 0; border: 0; border-top: 1px solid var(--linea); }
 .lista {
   display: grid;
   gap: 16px;
-  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
   margin: 0 0 8px;
   padding: 0;
   list-style: none;
@@ -250,7 +259,7 @@ hr { margin: 14px 0; border: 0; border-top: 1px solid var(--linea); }
 }
 /* Nombre de la cuenta arriba, monto grande abajo */
 .lista li > :first-child { font-size: .95rem; font-weight: 600; color: #fff; }
-.lista li > :last-child  { font-size: 1.6rem; font-weight: 800; letter-spacing: -.02em; color: #fff; }
+.lista li > :last-child  { font-size: 1.45rem; font-weight: 800; letter-spacing: -.02em; color: #fff; }
 .lista li .suave         { color: #b9e3d0; }
 
 
@@ -390,6 +399,10 @@ tbody tr:last-child td  { border-bottom: 0; }
 /* Navegadores sin backdrop-filter: vidrio más opaco para mantener legibilidad */
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .barra, .tarjeta, .tabla-scroll, .centro .tarjeta { background: rgba(255, 255, 255, .94); }
+}
+
+@media (max-width: 760px) {
+  .resumen { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 560px) {
