@@ -30,7 +30,8 @@ export default function Resumen({ version }: { version: number }) {
   const totalUSD = otros.filter((s) => s.moneda === "USD").reduce((a, s) => a + Number(s.saldo), 0);
 
   return (
-    <>
+    // Dos columnas: tarjetas de crédito a la izquierda, cuentas a la derecha (arriba)
+    <div className="resumen">
       <section>
         <h2>Tarjetas de crédito</h2>
         {tarjetas.length === 0 && <p className="suave">Aún no tienes tarjetas de crédito. Agrégalas en la pestaña Cuentas.</p>}
@@ -67,9 +68,10 @@ export default function Resumen({ version }: { version: number }) {
         {orden.map((tipo) => {
           const lista = otros.filter((s) => s.tipo === tipo);
           if (lista.length === 0) return null;
+          const titulo = tipo === "alto_rendimiento" ? "Tarjeta de alto rendimiento" : ETIQUETA_TIPO_CUENTA[tipo];
           return (
             <div key={tipo}>
-              <h3>{ETIQUETA_TIPO_CUENTA[tipo]}</h3>
+              <h3>{titulo}</h3>
               <ul className="lista">
                 {lista.map((s) => (
                   <li key={s.cuenta_id}>
@@ -85,6 +87,6 @@ export default function Resumen({ version }: { version: number }) {
           );
         })}
       </section>
-    </>
+    </div>
   );
 }
